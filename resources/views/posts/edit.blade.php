@@ -3,7 +3,7 @@
 
         <h2 class="text-2xl font-bold mb-6">글 수정</h2>
 
-        <form action="{{ route('posts.update', $post->id) }}" method="POST" class="space-y-6">
+        <form action="{{ route('posts.update', $post->id) }}" method="POST" class="space-y-6" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -11,6 +11,11 @@
                 <label class="block font-semibold mb-1">제목</label>
                 <input type="text" name="title" value="{{ $post->title }}"
                        class="w-full border rounded px-3 py-2" required>
+            </div>
+
+            <div>
+              <label class="block font-semibold mb-1">첨부파일</label>
+              <input type="file" name="attachment">
             </div>
 
             <div>

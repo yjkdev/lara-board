@@ -38,7 +38,7 @@
                         취소
                     </a>
                     <button
-                        class="px-5 py-2 text-sm font-semibold bg-amber-500 text-white rounded-full hover:bg-amber-600 transition">
+                        class="px-4 py-2 text-sm text-gray-500 rounded-full hover:bg-gray-100">
                         수정 완료
                     </button>
                 </div>

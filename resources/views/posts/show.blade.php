@@ -18,7 +18,7 @@
                 @if($post->user_id === auth()->id())
                     <div class="flex gap-2">
                         <a href="{{ route('posts.edit', $post->id) }}"
-                           class="px-3 py-1.5 text-xs font-semibold rounded-full bg-amber-500 text-white hover:bg-amber-600 transition">
+                           class="px-3 py-1.5 text-xs font-semibold rounded-full bg-amber-500 text-blue hover:bg-amber-600 transition">
                             수정
                         </a>
 
@@ -77,16 +77,25 @@
                         </div>
 
                         @if(auth()->id() === $comment->user_id)
-                            <form action="{{ route('comments.destroy', $comment->id) }}"
-                                  method="POST"
-                                  class="mt-2 text-right">
-                                @csrf
-                                @method('DELETE')
-                                <button
-                                    class="inline-flex items-center px-2 py-1 text-[11px] text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
-                                    댓글 삭제
-                                </button>
-                            </form>
+                            <div class="mt-2 flex justify-end gap-2">
+
+                                {{-- 댓글 수정 버튼 --}}
+                                <a href="{{ route('comments.edit', $comment->id) }}"
+                                class="inline-flex items-center px-2 py-1 text-[11px] text-gray-600 border border-gray-200 rounded-full hover:bg-gray-50 transition">
+                                    댓글 수정
+                                </a>
+
+                                {{-- 댓글 삭제 버튼 --}}
+                                <form action="{{ route('comments.destroy', $comment->id) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        class="inline-flex items-center px-2 py-1 text-[11px] text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition">
+                                        댓글 삭제
+                                    </button>
+                                </form>
+                            </div>
                         @endif
                     </div>
                 @empty

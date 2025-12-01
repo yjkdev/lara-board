@@ -41,13 +41,33 @@
 
             {{-- 첨부파일 --}}
             @if($post->attachment_path)
-                <div class="mt-6 inline-flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-100 rounded-full">
-                    <span class="text-xs text-blue-600 font-semibold">첨부파일</span>
-                    <a href="{{ asset('storage/'.$post->attachment_path) }}"
-                       class="text-sm text-blue-700 underline"
-                       download>
-                        {{ $post->attachment_original_name }}
-                    </a>
+                @php
+                    $ext = strtolower(pathinfo($post->attachment_path, PATHINFO_EXTENSION));
+                    $imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+                    $isImage = in_array($ext, $imageExts);
+                @endphp
+
+                <div class="mt-6 space-y-3">
+                    {{-- 파일 다운로드 영역 --}}
+                    <div class="inline-flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-100 rounded-full">
+                        <span class="text-xs text-blue-600 font-semibold">첨부파일</span>
+                        <a href="{{ asset('storage/'.$post->attachment_path) }}"
+                        class="text-sm text-blue-700 underline"
+                        download>
+                            {{ $post->attachment_original_name }}
+                        </a>
+                    </div>
+
+                    @if($isImage)
+                        {{-- 이미지 미리보기 --}}
+                        <div style="width: 500px; height: 500px;"
+                            class="flex items-center justify-center bg-gray-50 border border-gray-200 rounded-xl">
+                            <img src="{{ asset('storage/'.$post->attachment_path) }}"
+                                alt="첨부 이미지"
+                                style="max-width: 100%; max-height: 100%; object-fit: contain;"
+                                class="rounded-lg">
+                        </div>
+                    @endif
                 </div>
             @endif
 

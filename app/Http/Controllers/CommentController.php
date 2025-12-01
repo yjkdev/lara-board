@@ -23,21 +23,35 @@ class CommentController extends Controller
         return back()->with('success', '댓글이 등록되었습니다.');
     }
 
+    public function edit(Comment $comment)
+    {
+        // 작성자만 수정
+        if (auth()->id() !== $comment->user_id) abort(403);
+
+        return view('comments.edit', [
+            'comment' => $comment,
+        ]);
+    }
+
     public function update(Request $request, Comment $comment)
     {
-        if ($comment->user_id !== auth()->id()) {
+        // 작성자만
+        if (auth()->id() !== $comment->user_id) {
             abort(403);
         }
 
-        $request->validate([
-            'content' => 'required',
+        $validated = $request->validate([
+            'content' => ['required', 'string', 'max:1000'],
         ]);
 
         $comment->update([
-            'content' => $request->content,
+            'content' => $validated['content'],
         ]);
 
-        return back()->with('success', '댓글이 수정되었습니다.');
+        // 댓글이 속한 게시글 상세로 돌아가기
+        return redirect()
+            ->route('posts.show', $comment->post_id)
+            ->with('success', '댓글이 수정되었습니다.');
     }
 
     public function destroy(Comment $comment)

@@ -23,7 +23,7 @@
                                hover:bg-gray-50 hover:border-gray-400
                                transition-colors"
                     >
-                        Dashboard
+                        Move Laravel Board
                     </a>
                 @else
                     <a
